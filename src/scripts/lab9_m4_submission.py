@@ -93,7 +93,10 @@ def main() -> int:
                                                     rng=spec["bootstrap"]["rng"], confidence=spec["bootstrap"]["confidence"])
             comparisons[shape][metric] = {"delta": delta, "ci_low": low, "ci_high": high}
     commit = git("rev-parse", "HEAD")
-    dirty = bool(git("status", "--porcelain", "--", "src/lab9", "src/config", "src/scripts"))
+    code_paths = ("src/lab9", "src/config", "src/scripts")
+    # Compare content rather than cached stat information after CRLF/LF normalization.
+    dirty = bool(git("diff", "HEAD", "--", *code_paths)
+                 or git("ls-files", "--others", "--exclude-standard", "--", *code_paths))
     source_paths = sorted([*Path("lab9").glob("*.py"), *Path("config").glob("metric_spec*.yaml"),
                            Path("harness_map.yaml"), Path("scripts/lab9_m4_submission.py")])
     source_hashes = {path.as_posix(): hashlib.sha256(path.read_bytes()).hexdigest() for path in source_paths}
