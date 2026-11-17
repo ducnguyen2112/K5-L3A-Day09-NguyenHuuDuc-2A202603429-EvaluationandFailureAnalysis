@@ -1,5 +1,27 @@
 # K5 · Day 9 · Lab — Evaluation & Failure Analysis (LogiX-VN)
 
+## Bản nộp Nguyễn Hữu Đức — Core M0–M4
+
+Repo này đã tích hợp snapshot Lab8 để chạy trực tiếp sau khi clone. Code Lab8,
+fixture và policy được giữ nguyên nội dung theo [provenance](docs/lab8_snapshot.md).
+Các phần Advanced/Expert M5–M7 bên dưới là hướng dẫn starter, chưa thuộc bản Core.
+
+```powershell
+cd src
+python -m pip install -r requirements.txt -r requirements-lab9.txt
+python -m lab9.smoke
+python -m pytest -q -o addopts= -k "lab9 and not advanced"
+python scripts/lab9_m4_submission.py --evaluate --verify
+```
+
+[Eval card](docs/eval_card.md) · [PRD v1.1](docs/PRD_v1.1.md) ·
+[Judge audit](docs/judge_audit.md) · [Trace case](docs/trace_case.md) ·
+[M3 validation](docs/m3_validation.md).
+
+Baseline và report Core được commit trong `src/reports/`. Chạy các lệnh sinh
+trace lần lượt. `.gitattributes` và writer LF giữ SHA eval set thống nhất giữa
+Windows và Linux; không sửa tay report hoặc hạ ngưỡng để qua gate.
+
 > Nối tiếp Lab 8. Lab 8 trả lời "agent có chạy không"; Lab 9 trả lời **"làm sao biết bản mới tốt hơn — và chặn được bản tệ trước khi merge"**.
 > Không cần API key: MockLLM + judge replay. **Không Langfuse / OTel** (observability học ở Day 14).
 
@@ -18,7 +40,7 @@
 
 ## Cài đặt (M0): chép overlay vào repo Lab 8
 
-Starter này **không chạy độc lập**: nó chỉ có `src/lab9/`, docs và workflow. Code agent, dữ liệu và `requirements.txt` nằm trong repo Lab 8 của nhóm.
+Starter gốc **không chạy độc lập**: nó chỉ có `src/lab9/`, docs và workflow. Bản nộp này đã kèm snapshot Lab8; phần hướng dẫn overlay bên dưới dành cho trường hợp ghép starter gốc vào một repo Lab8 khác.
 
 **Không cần hoàn thiện Lab 8.** M0–M4 (baseline, gate, `fixed`, `seeded_regression`) đều chạy trên shape `swarm`, tức `lab8/shapes/swarm_reference.py` do giảng viên cung cấp, không dùng `workflow`/`single`/`orchestrator` của nhóm. Repo Lab 8 còn TODO vẫn làm được Lab 9, miễn là package `src/lab8/` còn nguyên.
 
