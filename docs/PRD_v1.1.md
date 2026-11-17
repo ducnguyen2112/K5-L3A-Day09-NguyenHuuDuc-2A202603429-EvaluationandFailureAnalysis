@@ -71,9 +71,19 @@ phê duyệt bằng bằng chứng riêng trước release. Chưa cấp ngoại 
 
 - Chưa có dữ liệu người dùng/LLM/tiền thật hoặc held-out judge mới.
 - 14 item cho CI rộng; v1 chưa chứng minh phát hiện ổn định lỗi hiếm/slice nhỏ.
-- Gate Core chưa hoàn thiện integrity/slice/ratchet của M5–M7.
+- Core dùng v1; slice/reliability/integrity/ratchet được kiểm riêng ở v2 (xem bổ sung M5–M7).
 - Parser reply theo contract public; cần thêm nhãn/kiểm thử trước khi đổi định dạng tiền.
 - GitHub CI phải được xác nhận trên PR thực; local PASS không thay thế remote checks.
+
+## Bổ sung checkpoint M5
+
+Eval set v2 mở rộng lên 28 item với 14 claim adversarial; giữ riêng nhãn v1/v2,
+ánh xạ cơ chế sang FM và yêu cầu ít nhất 3 item cho mỗi FM bị tấn công.
+Spec v2 thêm các slice blocking `money_movement`, `adversarial`, `denial`,
+floor 0.90 và paired CI; không thay đổi tính năng hoặc các ngưỡng v1.
+Baseline M5 được review tại `src/reports/m5/baseline_v2.json`. Xem
+[M5 validation](m5_validation.md) cho run ID, số liệu và trace cross-principal bị chặn.
+M6/M7 được ghi trong phần bổ sung bên dưới; pilot thật chưa được phê duyệt.
 
 ## 7. Version và phê duyệt
 
@@ -86,4 +96,15 @@ reply_ledger_agreement và quote_amount_kept; không nới ngưỡng của 1.0.
 | Eval owner | Nguyễn Hữu Đức (2A202603429), chịu trách nhiệm hồ sơ đánh giá và gate |
 | Product/coach pilot thật | Chưa chỉ định/chưa phê duyệt; bản này chỉ dùng offline |
 
-Code/grader commit `a657cec0553fb6ff3c2b0b1a600f93dedda2ea50`; fingerprint `80d9d60fa7f8a715b32c32f7800aaae994e3cc248f3aef51910f092d69e82b59`.
+Snapshot Core M4: code/grader commit `a657cec0553fb6ff3c2b0b1a600f93dedda2ea50`;
+fingerprint `80d9d60fa7f8a715b32c32f7800aaae994e3cc248f3aef51910f092d69e82b59`.
+Fingerprint của bản đầy đủ nằm trong `src/reports/m67/evidence.json`.
+
+<!-- M67 START -->
+## M6/M7 acceptance addendum
+
+The offline v2 gate blocks reliability below pass_hat_5=0.80, violations in money/adversarial/
+denial slices, and structurally untrustworthy reports. Same-version threshold changes require
+ratchet verification against the base-branch spec. Public mutation score is 3/3 with zero
+false alarms; four public traps are rejected. This does not authorize a live financial pilot.
+See [M6/M7 validation](m67_validation.md) for A/A selection, limitations and rerun instructions.

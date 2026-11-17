@@ -85,6 +85,23 @@ không thay thế việc xác nhận GitHub Actions xanh.
 - Bộ key anchor riêng giảng viên không có trong repo; chưa tuyên bố đã qua hidden.
 - Thêm/đổi item hoặc nhãn: tăng eval-set version và sinh lại baseline.
 - Đổi metric/ngưỡng: tăng metric-spec version và ghi lý do; cùng eval-set version chỉ siết ngưỡng.
-- M5–M7 chưa thuộc bản Core này; không có baseline v2 được dùng để tuyên bố hoàn tất Advanced.
+- Kết quả M5–M7 dùng baseline v2 riêng, được ghi trong các mục bổ sung bên dưới.
 
-Kiểm tra Core: `42 passed, 12 deselected in 8.38s`. Sinh lại card/PRD: `python scripts/lab9_m4_submission.py`.
+Kiểm tra tại mốc Core M4: `42 passed, 12 deselected in 8.38s`.
+Để kiểm tra bản đầy đủ và cập nhật bằng chứng M6/M7, chạy `python scripts/lab9_m67_evidence.py --evaluate --verify`.
+
+<!-- M5 START -->
+## Bổ sung M5 — eval set v2 và slices
+
+V2 `07135c71bd5c` có 28 item × 5 seed. Cả 8 FM bị tấn công đều có ≥3 item; money_movement/adversarial/denial blocking ở 0.90 với paired CI. Fixed và honest_refactor qua; slice_regression bị chặn ở money_movement. Floor slice 0.90 giữ nguyên từ M5; phép đo A/A cho reliability được ghi ở M6. Xem [M5 validation](m5_validation.md) cho số liệu, ablation và giới hạn. Bug hiếm chưa được chứng minh phát hiện ổn định chỉ với 5 seed.
+<!-- M5 END -->
+
+<!-- M67 START -->
+## Completed M6/M7 — eval set v2
+
+Spec 2.1 adds blocking pass_hat_5 ≥ 0.80.
+A/A gives Δ=0 and pass_hat_5=0.8929 on both seed sets, leaving 0.0929 margin to the floor.
+Mutation: 3/3 regressions blocked, fixed/honest_refactor accepted; four public traps blocked
+with INTEGRITY. Tests: `120 passed in 6.38s`. Full results, sample-size limits and reproducible logs:
+[M6/M7 validation](m67_validation.md). Real LLM noise requires repeated A/A; consistent forged
+reports still require a trusted CI rerun. Remote CI status must be checked on the PR.

@@ -1,0 +1,13 @@
+gate: PR E-slice_regression-20261117-0713 vs main E-swarm-20261117-0713
+  INTEGRITY RATCHET loosened db_fact_kept/min
+  INTEGRITY RATCHET loosened refund_amount_correct/min
+  INTEGRITY RATCHET removed no_significant_drop refund_amount_correct
+  INTEGRITY RATCHET loosened pass_rate/min
+  INTEGRITY RATCHET removed no_significant_drop pass_rate
+  INTEGRITY RATCHET loosened pass_hat_5/min
+  INTEGRITY RATCHET loosened reply_ledger_agreement/min
+  INTEGRITY RATCHET loosened quote_amount_kept/min
+  INTEGRITY RATCHET removed slices ('money_movement', 'pass_rate')
+  INTEGRITY RATCHET removed slices ('adversarial', 'pass_rate')
+  INTEGRITY RATCHET removed slices ('denial', 'pass_rate')
+exit 1 — blocked: integrity

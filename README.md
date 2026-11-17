@@ -1,10 +1,23 @@
 # K5 · Day 9 · Lab — Evaluation & Failure Analysis (LogiX-VN)
 
-## Bản nộp Nguyễn Hữu Đức — Core M0–M4
+## Bản nộp Nguyễn Hữu Đức — hoàn tất local M0–M7
 
 Repo này đã tích hợp snapshot Lab8 để chạy trực tiếp sau khi clone. Code Lab8,
 fixture và policy được giữ nguyên nội dung theo [provenance](docs/lab8_snapshot.md).
-Các phần Advanced/Expert M5–M7 bên dưới là hướng dẫn starter, chưa thuộc bản Core.
+M5 bổ sung eval set v2 và slice gate; M6–M7 bổ sung reliability, A/A và integrity/ratchet.
+Chạy trong **repo Day09 này**, không dùng thư mục Lab8 cũ có overlay chưa cập nhật.
+
+Kiểm tra toàn bộ bài từ thư mục gốc repo (venv cần được kích hoạt):
+
+```powershell
+cd src
+python scripts/lab9_m67_evidence.py --evaluate --verify
+```
+
+Cuối lệnh phải hiện `M0-M7 PASS`: mutation 3/3, 0 báo nhầm, 4/4 trap bị chặn.
+Gate của regression/trap trả exit 1 là kết quả mong đợi; script kiểm tra tổng trả exit 0.
+[M6/M7 validation](docs/m67_validation.md) ghi A/A, ngưỡng, scorecard và giới hạn.
+Kết quả local không thay thế trạng thái GitHub Actions trên PR.
 
 ```powershell
 cd src
@@ -17,6 +30,17 @@ python scripts/lab9_m4_submission.py --evaluate --verify
 [Eval card](docs/eval_card.md) · [PRD v1.1](docs/PRD_v1.1.md) ·
 [Judge audit](docs/judge_audit.md) · [Trace case](docs/trace_case.md) ·
 [M3 validation](docs/m3_validation.md).
+
+Chạy checkpoint M5 từ `src/`:
+
+```powershell
+python -m lab9.evalset --v2 --build
+python scripts/lab9_m5_evidence.py --evaluate --verify
+```
+
+[M5 validation](docs/m5_validation.md) giải thích coverage, slice, ablation và
+baseline riêng ở `src/reports/m5/`. Job `eval-gate-m5` kiểm mốc này; job đầy đủ
+`eval-gate-v2` kiểm M5–M7 với baseline canonical `src/reports/baseline_v2.json`.
 
 Baseline và report Core được commit trong `src/reports/`. Chạy các lệnh sinh
 trace lần lượt. `.gitattributes` và writer LF giữ SHA eval set thống nhất giữa
@@ -89,7 +113,7 @@ Core (M0–M4, 60đ) chứng minh gate chặn được một regression **rõ r�
 cd src
 # M5 — eval set v2: điền config/fm_map.yaml (cơ chế tấn công -> mã FM của bạn), rồi build + check
 python -m lab9.evalset --v2 --build          # mỗi FM bị tấn công cần >= 3 item
-# Điền TODO trong config/metric_spec_v2.yaml (slices, pass_hat_5, metric FM-08) và slice_check trong gate.py
+# Bản nộp đã hoàn tất mapping/slices; lệnh dưới sinh baseline swarm (có thể có claim fail)
 python -m lab9.eval --shape swarm --spec config/metric_spec_v2.yaml --out reports/baseline_v2.json
 
 # M6 — nhiễu: cài stats.pass_at_k / pass_hat_k; chọn ngưỡng NGOÀI dải nhiễu A/A
@@ -125,9 +149,9 @@ Lưu ý: một bug chỉ xuất hiện ở 1/3 seed (`rare`) **không** phát hi
 
 ## Bản đồ file
 ```
-src/lab9/evalset.py   eval set v1 + provenance + check        (TODO M1: failure_modes)
-src/lab9/graders.py   pydantic-evals Evaluators               (TODO M3: 2 grader)
-src/lab9/stats.py     confusion, P/R, kappa, RG, bootstrap    (TODO M2, M4)
+src/lab9/evalset.py   eval sets v1/v2 + provenance + coverage check
+src/lab9/graders.py   pydantic-evals trajectory/outcome graders
+src/lab9/stats.py     confusion, P/R, kappa, RG, bootstrap, pass@k/pass^k
 src/lab9/trace_case.py trace → bước sai đầu tiên cho 1 claim@seed (docs/trace_case.md)
 src/lab9/judge.py     calibrate judge từ CSV (replay)
 src/lab9/eval.py      chạy 1 shape → reports/eval_<shape>.json có run_id
@@ -135,7 +159,7 @@ src/lab9/gate.py      PR vs baseline theo metric_spec → exit 0/1
 src/lab9/variants.py  fixed / seeded_regression (+ honest_refactor, slice_, flaky_regression cho v2)
 src/lab9/mutation.py  scorecard: variant công khai qua gate của bạn; --aa = nhiễu A/A   (M5–M7)
 src/lab9/traps.py     sinh report đã bị làm đẹp để thử integrity_check                  (M7)
-src/config/metric_spec_v2.yaml, fm_map.yaml, data/eval/adversarial_v2.json             (TODO M5, M6)
+src/config/metric_spec_v2.yaml, fm_map.yaml, data/eval/adversarial_v2.json
 src/config/metric_spec.yaml   ngưỡng (ratchet: cùng eval-set version chỉ được chặt hơn)
 ```
 Quy tắc: không sửa file `lab8/`; không sửa tay `reports/`; không đặt nhãn inline trong item.

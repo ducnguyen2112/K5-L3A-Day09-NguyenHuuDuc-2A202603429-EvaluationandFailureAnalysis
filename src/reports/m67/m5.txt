@@ -1,0 +1,5 @@
+swarm: 140 trials, pass_rate=0.9786
+fixed: 140 trials, pass_rate=1.0
+honest_refactor: 140 trials, pass_rate=1.0
+slice_regression: 140 trials, pass_rate=0.9357
+M5 PASS: 28 items; controls pass; slice_regression blocked; 107 passed, 11 deselected in 6.00s

@@ -1,0 +1,6 @@
+gate: PR E-slice_regression-20261117-0713 vs main E-swarm-20261117-0713
+  INTEGRITY PR: row count differs from manifest items x seeds
+  INTEGRITY PR: missing/non-finite metric pass_hat_5
+  INTEGRITY PR: incomplete item x seed grid
+  INTEGRITY PR (item, seed) set differs from baseline
+exit 1 — blocked: integrity

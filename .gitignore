@@ -8,10 +8,14 @@ venv/
 !.env.example
 src/reports/*
 !src/reports/baseline_v1.json
+!src/reports/baseline_v2.json
+!src/reports/m67/
+!src/reports/traps/
 !src/reports/eval_fixed.json
 !src/reports/eval_seeded_regression.json
 !src/reports/m3/
 !src/reports/m4/
+!src/reports/m5/
 src/traces/
 *.sqlite
 *.sqlite-*
