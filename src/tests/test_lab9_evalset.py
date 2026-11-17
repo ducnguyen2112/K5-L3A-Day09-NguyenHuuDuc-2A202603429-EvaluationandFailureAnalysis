@@ -57,3 +57,11 @@ def test_check_rejects_missing_tags(tmp_path, evalset_cli):
     result = evalset_cli("--check")
     assert result.returncode == 1, result.stdout + result.stderr
     assert "failure_modes empty" in result.stdout
+
+
+def test_build_uses_lf_so_manifest_hash_survives_git_checkout(tmp_path, evalset_cli):
+    result = evalset_cli("--build")
+    assert result.returncode == 0, result.stdout + result.stderr
+    for name in ("eval_set_v1.jsonl", "labels_v1.json"):
+        body = (tmp_path / "data/eval" / name).read_bytes()
+        assert b"\r" not in body, f"{name} must use LF on Windows and Linux"

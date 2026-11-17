@@ -59,6 +59,31 @@ jobs:
             exit 1
           fi
 
+  # M5 is independently reviewable before the M6 statistics and M7 integrity work is complete.
+  eval-gate-m5:
+    needs: eval-gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env: {PYTHONUTF8: "1"}
+    defaults: {run: {working-directory: src}}
+    steps:
+      - uses: actions/checkout@v7
+        with: {persist-credentials: false}
+      - id: has
+        run: "test -f reports/m5/baseline_v2.json && echo m5=1 >> \"$GITHUB_OUTPUT\" || echo skip, no M5 baseline"
+      - if: steps.has.outputs.m5
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2
+        with: {python-version: "3.13", activate-environment: true, enable-cache: true, cache-dependency-glob: "src/requirements*.txt"}
+      - if: steps.has.outputs.m5
+        run: uv pip install -r requirements.txt -r requirements-lab9.txt
+      - if: steps.has.outputs.m5
+        run: python -m lab9.evalset --v2
+      - if: steps.has.outputs.m5
+        run: python -m pytest -q -m student -o addopts= -k "lab9_m5 or (advanced and slice_check)"
+      - if: steps.has.outputs.m5
+        name: Verify committed M5 baseline, controls and money slice regression
+        run: python scripts/lab9_m5_evidence.py --evaluate
+
   # Advanced/Expert (M5-M7). Runs only once the team commits reports/baseline_v2.json, so a
   # Core-only submission stays green. Exit 1 = a survived mutant or a false alarm.
   eval-gate-v2:
@@ -69,7 +94,7 @@ jobs:
     defaults: {run: {working-directory: src}}
     steps:
       - uses: actions/checkout@v7
-        with: {persist-credentials: false}
+        with: {persist-credentials: false, fetch-depth: 0}
       - id: has
         run: "test -f reports/baseline_v2.json && echo v2=1 >> \"$GITHUB_OUTPUT\" || echo skip, no baseline_v2"
       - if: steps.has.outputs.v2
@@ -82,4 +107,14 @@ jobs:
       - if: steps.has.outputs.v2
         run: python -m lab9.evalset --v2
       - if: steps.has.outputs.v2
-        run: python -m lab9.mutation --spec config/metric_spec_v2.yaml --baseline reports/baseline_v2.json
+        name: Check threshold ratchet against the PR base spec
+        env: {BASE_SHA: "${{ github.event.pull_request.base.sha }}"}
+        shell: bash
+        run: |
+          if [[ -n "$BASE_SHA" ]]; then
+            git show "${BASE_SHA}:src/config/metric_spec_v2.yaml" > reports/base_metric_spec_v2.yaml
+            python -m lab9.gate --pr reports/baseline_v2.json --baseline reports/baseline_v2.json --spec config/metric_spec_v2.yaml --base-spec reports/base_metric_spec_v2.yaml
+          fi
+      - if: steps.has.outputs.v2
+        name: Verify A/A, all public mutations, trap verdicts and the full test suite
+        run: python scripts/lab9_m67_evidence.py --evaluate --verify

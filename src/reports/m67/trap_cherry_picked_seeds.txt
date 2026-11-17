@@ -1,0 +1,4 @@
+gate: PR E-slice_regression-20261117-0713 vs main E-swarm-20261117-0713
+  INTEGRITY PR: missing/non-finite metric pass_hat_5
+  INTEGRITY PR (item, seed) set differs from baseline
+exit 1 — blocked: integrity

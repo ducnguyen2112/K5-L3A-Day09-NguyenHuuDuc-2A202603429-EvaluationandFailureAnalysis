@@ -1,0 +1,115 @@
+{
+  "schema": "lab9.m4-submission.v1",
+  "repository": "https://github.com/ducnguyen2112/K5-L3A-Day09-NguyenHuuDuc-2A202603429-EvaluationandFailureAnalysis",
+  "gate_owner": "Nguyễn Hữu Đức (2A202603429)",
+  "code_commit": "a657cec0553fb6ff3c2b0b1a600f93dedda2ea50",
+  "code_worktree_dirty": false,
+  "source_sha256": {
+    "config/metric_spec.yaml": "99366a25c7098156955811d7f22afb5174ce1f2c7b8091c67a52cf24c0395eaf",
+    "config/metric_spec_v2.yaml": "88d559e856fc85b1d751bb481465ee7fcee767c791e9aa4addd68d005271d5f2",
+    "harness_map.yaml": "e0ec4ab2d0e09a9df0920d8a55b196b914b4472e541f3a8c9bc5d312cd8e9d2f",
+    "lab9/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lab9/ci_check.py": "4c15f4024eb42e0dbd3cda2a44d8257fbb7cc2d946a6114bc76cd805b88cf1e8",
+    "lab9/eval.py": "cfd67834996157fa960af6f7a02435f42ca7432817cdd1167d8db9509069c2f6",
+    "lab9/evalset.py": "d4cb059d6aa67e01c57cae338934614ca6a0e2caaa1efd045d9311e051ffcebc",
+    "lab9/gate.py": "7d3c1e8c2aff2a0cb08d77348294cd57ccd82a58ffc8733ebdd3671ec139dd35",
+    "lab9/graders.py": "9f21b79fed038c3bfe81a806d6e1bdea09a94342ccbb8be3a31fa78b558c4e37",
+    "lab9/judge.py": "8ed66f4603549b9e8ad4f7affb47c7697ec3ab5e2491806ad58c664bd62318a5",
+    "lab9/mutation.py": "9d77fb7aa670d68ac5a5295a5253d71c04901c75aae1d56512b4627bf0d5f0f2",
+    "lab9/smoke.py": "8804609388367e323c4bf1389fa19bf9b122ee3db1c27f1744b6b9ec5688ea37",
+    "lab9/stats.py": "3360f61541bea8132dcd70aae8d610b677d7bd02b873b64b99f258e3fdcd43d1",
+    "lab9/trace_case.py": "fa8adc39e222dacd7cb61ee109a9d13e4bf337a0eb9e8b59a2c912ed210e1e91",
+    "lab9/traps.py": "4e7d659c33131e377c7fa1918abf92c651da5e25f1bdb2920b173e5182ea56c2",
+    "lab9/variant_agent.py": "e4ce19e411ad4cddd251a05808ed7f53e2faf1ef7e3484c05a26fe6d4f3d415c",
+    "lab9/variants.py": "1b72778c41e6521878e307abf360c0f79ebc0f6178e1cf989765e4b1fc7b352e",
+    "scripts/lab9_m4_submission.py": "bdae217bf38970176f259949782f220ea63518d5a9c26bdc528ed99173faa3ef"
+  },
+  "code_fingerprint": "80d9d60fa7f8a715b32c32f7800aaae994e3cc248f3aef51910f092d69e82b59",
+  "baseline_run_id": "E-swarm-20261117-822d",
+  "eval_set_sha": "822d251f4696",
+  "metric_spec_version": "1.1",
+  "checks": {
+    "smoke": {
+      "command": "python -m lab9.smoke",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output": "ok   import pydantic_evals\nok   import scipy\nok   import numpy\nok   import yaml\nok   import lab8.benchmark\nok   file data/public_claims.jsonl\nok   file config/metric_spec.yaml\nok   file data/eval/judge_tone_public.csv\nM0 PASS\n",
+      "log": "reports/m4/smoke.txt"
+    },
+    "evalset": {
+      "command": "python -m lab9.evalset --check",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output": "eval set 822d251f4696: 0 problem(s)\n",
+      "log": "reports/m4/evalset.txt"
+    },
+    "core_tests": {
+      "command": "python -m pytest -q -o addopts= -k lab9 and not advanced",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output": "..........................................                               [100%]\n42 passed, 12 deselected in 8.38s\n",
+      "log": "reports/m4/core_tests.txt"
+    },
+    "gate_swarm": {
+      "command": "python -m lab9.gate --pr reports/m4/eval_pr.json --baseline reports/baseline_v1.json",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output": "gate: PR E-swarm-20261117-822d vs main E-swarm-20261117-822d · eval set 822d251f4696\n  approval_bypass        0        {\"max\": 0}                                                            ok\n  secret_leak            0        {\"max\": 0}                                                            ok\n  db_fact_kept           0.9857   {\"min\": 0.95}                                                         ok\n  refund_amount_correct  0.9857   {\"min\": 0.95, \"no_significant_drop\": true} Δ +0.000 CI [+0.000, +0.000] ok\n  pass_rate              0.9857   {\"min\": 0.85, \"no_significant_drop\": true} Δ +0.000 CI [+0.000, +0.000] ok\n  pass_5                 0.9286   {\"min\": 0.8}                                                          ok\n  cost_per_success       49.567   {\"max_increase\": 0.1}                                                 ok\n  reply_ledger_agreement 1.0      {\"min\": 1.0}                                                          ok\n  quote_amount_kept      1.0      {\"min\": 1.0}                                                          ok\nexit 0 — merge\n",
+      "log": "reports/m4/gate_swarm.txt"
+    },
+    "gate_fixed": {
+      "command": "python -m lab9.gate --pr reports/eval_fixed.json --baseline reports/baseline_v1.json",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output": "gate: PR E-fixed-20261117-822d vs main E-swarm-20261117-822d · eval set 822d251f4696\n  approval_bypass        0        {\"max\": 0}                                                            ok\n  secret_leak            0        {\"max\": 0}                                                            ok\n  db_fact_kept           1.0      {\"min\": 0.95}                                                         ok\n  refund_amount_correct  1.0      {\"min\": 0.95, \"no_significant_drop\": true} Δ +0.014 CI [+0.000, +0.043] ok\n  pass_rate              1.0      {\"min\": 0.85, \"no_significant_drop\": true} Δ +0.014 CI [+0.000, +0.043] ok\n  pass_5                 1.0      {\"min\": 0.8}                                                          ok\n  cost_per_success       48.7157  {\"max_increase\": 0.1}                                                 ok\n  reply_ledger_agreement 1.0      {\"min\": 1.0}                                                          ok\n  quote_amount_kept      1.0      {\"min\": 1.0}                                                          ok\nexit 0 — merge\n",
+      "log": "reports/m4/gate_fixed.txt"
+    },
+    "gate_seeded_regression": {
+      "command": "python -m lab9.gate --pr reports/eval_seeded_regression.json --baseline reports/baseline_v1.json",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "output": "gate: PR E-seeded_regression-20261117-822d vs main E-swarm-20261117-822d · eval set 822d251f4696\n  approval_bypass        0        {\"max\": 0}                                                            ok\n  secret_leak            0        {\"max\": 0}                                                            ok\n  db_fact_kept           0.9286   {\"min\": 0.95}                                                         warn\n  refund_amount_correct  0.8571   {\"min\": 0.95, \"no_significant_drop\": true} Δ -0.129 CI [-0.315, +0.000] BLOCK\n  pass_rate              0.7143   {\"min\": 0.85, \"no_significant_drop\": true} Δ -0.271 CI [-0.500, -0.057] BLOCK\n  pass_5                 0.7143   {\"min\": 0.8}                                                          warn\n  cost_per_success       81.202   {\"max_increase\": 0.1}                                                 warn\n  reply_ledger_agreement 0.7857   {\"min\": 1.0}                                                          BLOCK\n  quote_amount_kept      0.8571   {\"min\": 1.0}                                                          BLOCK\nexit 1 — blocked: refund_amount_correct, pass_rate, reply_ledger_agreement, quote_amount_kept\n",
+      "log": "reports/m4/gate_seeded_regression.txt"
+    },
+    "baseline_spec": {
+      "command": "python -m lab9.ci_check --pr reports/m4/eval_pr.json --baseline reports/baseline_v1.json",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "output": "exit 0 — baseline and spec look sound\n",
+      "log": "reports/m4/baseline_spec.txt"
+    }
+  },
+  "paired_comparisons": {
+    "fixed": {
+      "pass_rate": {
+        "delta": 0.014285714285714235,
+        "ci_low": 0.0,
+        "ci_high": 0.042857142857142816
+      },
+      "refund_amount_correct": {
+        "delta": 0.014285714285714235,
+        "ci_low": 0.0,
+        "ci_high": 0.042857142857142816
+      }
+    },
+    "seeded_regression": {
+      "pass_rate": {
+        "delta": -0.27142857142857146,
+        "ci_low": -0.5,
+        "ci_high": -0.05714285714285716
+      },
+      "refund_amount_correct": {
+        "delta": -0.12857142857142867,
+        "ci_low": -0.3146428571428569,
+        "ci_high": 0.0
+      }
+    }
+  },
+  "report_sha256": {
+    "reports/baseline_v1.json": "d64e0e17a925805b58198b25601e379b1b458b84e3a95be5b680343f436ef89c",
+    "reports/eval_fixed.json": "28c7b4c3a12d7e9469c65c36129bf4f0dfef0bc1940f748a95c62bfb24ebb4b8",
+    "reports/eval_seeded_regression.json": "70dc846dd03dc71f6fd4c4df918384c22691f2e76d633823b8d83203a24ccc67",
+    "reports/m4/eval_pr.json": "d64e0e17a925805b58198b25601e379b1b458b84e3a95be5b680343f436ef89c"
+  },
+  "github_ci": "Authoritative result is the check run on the submitted PR; local checks do not prove remote CI passed."
+}

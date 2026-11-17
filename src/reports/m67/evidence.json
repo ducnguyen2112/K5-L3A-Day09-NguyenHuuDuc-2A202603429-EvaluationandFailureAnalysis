@@ -1,0 +1,176 @@
+{
+  "schema": "lab9.m67-evidence.v1",
+  "eval_set_sha": "07135c71bd5c",
+  "metric_spec_version": "2.1",
+  "gate_decisions": {
+    "swarm": {
+      "blocked": [],
+      "exit_code": 0
+    },
+    "fixed": {
+      "blocked": [],
+      "exit_code": 0
+    },
+    "honest_refactor": {
+      "blocked": [],
+      "exit_code": 0
+    },
+    "slice_regression": {
+      "blocked": [
+        "quote_amount_kept",
+        "slice:money_movement/pass_rate"
+      ],
+      "exit_code": 1
+    },
+    "seeded_regression": {
+      "blocked": [
+        "refund_amount_correct",
+        "pass_rate",
+        "pass_hat_5",
+        "reply_ledger_agreement",
+        "quote_amount_kept",
+        "slice:money_movement/pass_rate",
+        "slice:adversarial/pass_rate",
+        "slice:denial/pass_rate"
+      ],
+      "exit_code": 1
+    },
+    "flaky_regression": {
+      "blocked": [
+        "pass_rate",
+        "pass_hat_5",
+        "quote_amount_kept",
+        "slice:money_movement/pass_rate"
+      ],
+      "exit_code": 1
+    }
+  },
+  "aa": {
+    "base_seeds": [
+      11,
+      22,
+      33,
+      44,
+      55
+    ],
+    "alternate_seeds": [
+      66,
+      77,
+      88,
+      99,
+      110
+    ],
+    "metrics": {
+      "approval_bypass": {
+        "baseline": 0,
+        "alternate": 0,
+        "delta": 0
+      },
+      "secret_leak": {
+        "baseline": 0,
+        "alternate": 0,
+        "delta": 0
+      },
+      "db_fact_kept": {
+        "baseline": 0.9786,
+        "alternate": 0.9786,
+        "delta": 0.0
+      },
+      "refund_amount_correct": {
+        "baseline": 0.9786,
+        "alternate": 0.9786,
+        "delta": 0.0
+      },
+      "pass_rate": {
+        "baseline": 0.9786,
+        "alternate": 0.9786,
+        "delta": 0.0
+      },
+      "reply_ledger_agreement": {
+        "baseline": 1.0,
+        "alternate": 1.0,
+        "delta": 0.0
+      },
+      "quote_amount_kept": {
+        "baseline": 1.0,
+        "alternate": 1.0,
+        "delta": 0.0
+      },
+      "pass_5": {
+        "baseline": 0.8929,
+        "alternate": 0.8929,
+        "delta": 0.0
+      },
+      "pass_at_1": {
+        "baseline": 0.9786,
+        "alternate": 0.9786,
+        "delta": 0.0
+      },
+      "pass_hat_1": {
+        "baseline": 0.9786,
+        "alternate": 0.9786,
+        "delta": 0.0
+      },
+      "pass_at_3": {
+        "baseline": 1.0,
+        "alternate": 1.0,
+        "delta": 0.0
+      },
+      "pass_hat_3": {
+        "baseline": 0.9357,
+        "alternate": 0.9357,
+        "delta": 0.0
+      },
+      "pass_at_5": {
+        "baseline": 1.0,
+        "alternate": 1.0,
+        "delta": 0.0
+      },
+      "pass_hat_5": {
+        "baseline": 0.8929,
+        "alternate": 0.8929,
+        "delta": 0.0
+      },
+      "cost_per_success": {
+        "baseline": 50.8077,
+        "alternate": 50.8077,
+        "delta": 0.0
+      }
+    },
+    "pass_rate_paired_ci": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "mutation_score": "3/3",
+  "false_alarms": 0,
+  "traps": {
+    "cherry_picked_seeds": {
+      "exit_code": 1,
+      "reason": "INTEGRITY"
+    },
+    "dropped_failing_rows": {
+      "exit_code": 1,
+      "reason": "INTEGRITY"
+    },
+    "evaluator_errors_as_nan": {
+      "exit_code": 1,
+      "reason": "INTEGRITY"
+    },
+    "loosened_spec": {
+      "exit_code": 1,
+      "reason": "INTEGRITY"
+    }
+  },
+  "tests": "120 passed in 6.38s",
+  "reference_files_unchanged": true,
+  "source_sha256": {
+    "lab9/stats.py": "ce8e4206820258e8a9ce281b7605056d1d0e1d80b27c64f4e068367244f1b511",
+    "lab9/gate.py": "9ac214aef54d61513aff131db2a0227ee253e3dc26057d5561c953f4a81c362f",
+    "lab9/ci_check.py": "54aea9477aa58daaae32a646246ebd66202b5c2ff74bd32d38fe1538393f4351",
+    "config/metric_spec_v2.yaml": "a84b77144c0a30de0acd9da360d6773b175697be5220802ee435b4ac24344331",
+    "tests/test_lab9_m67.py": "1dcc1c76c76671036da2a02c5db92708329dcdac87387d2a4a2d2f93420c3172",
+    "scripts/lab9_m67_evidence.py": "23defa8f9644c0d68fb309f93d9ad1b2cadef1d69ef702182ec6514f7ef8e3d1"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "rate_only": [
+    "  pass_rate              0.9143   {\"min\": 0.85, \"no_significant_drop\": true} Δ -0.064 CI [-0.114, -0.014] BLOCK"
+  ],
+  "rate_only_blocked": [
+    "pass_rate"
+  ],
+  "with_reliability": [
+    "  pass_rate              0.9143   {\"min\": 0.85, \"no_significant_drop\": true} Δ -0.064 CI [-0.114, -0.014] BLOCK",
+    "  pass_hat_5             0.5714   {\"min\": 0.8}                                                          BLOCK"
+  ],
+  "with_reliability_blocked": [
+    "pass_rate",
+    "pass_hat_5"
+  ]
+}
